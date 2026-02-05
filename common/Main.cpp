@@ -99,9 +99,8 @@ int main( void )
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
-
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders( "vertex_shader.glsl", "fragment_shader.glsl" );
+    GLuint programID = LoadShaders( "../Shaders/vertex_shader.glsl", "../Shaders/fragment_shader.glsl" );
 
     /*****************TODO***********************/
     // Get a handle for our "Model View Projection" matrices uniforms
@@ -115,7 +114,7 @@ int main( void )
     /****************************************/
 
     //Chargement du fichier de maillage
-    std::string filename("suzanne.off");
+    std::string filename("../Resources/Models/Off/suzanne.off");
     Mesh mesh = Mesh();
     mesh.openOFF(filename, 1);
     // Load it into a VBO
@@ -125,7 +124,7 @@ int main( void )
     GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
     //vec3(0.250000, 0.000000, 0.000000) vec3(0.250000, 0.500000, 0.000000) vec3(0.200000, 0.500000, 0.000000)
 
-    mesh.setShader("vertex_shader.glsl", "fragment_shader.glsl");
+    mesh.setShader("../Shaders/vertex_shader.glsl", "../Shaders/fragment_shader.glsl");
     Material mat = Material(glm::vec3(0.5, 0.5, 0.5));
     //mat.addTexture("texture0", Texture("../Resources/Textures/Environement/grass.png"));
     mesh.setMaterial(mat);

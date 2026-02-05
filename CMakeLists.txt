@@ -1,6 +1,6 @@
 # CMake entry point
 cmake_minimum_required (VERSION 3.0)
-project (Tutorials)
+project (Moteur)
 
 find_package(OpenGL REQUIRED)
 
@@ -53,9 +53,9 @@ add_definitions(
         -D_CRT_SECURE_NO_WARNINGS
 )
 
-# TP1
-add_executable(TP1
-        TP1/TP1.cpp
+# Main
+add_executable(Main
+        common/Main.cpp
         common/shader.cpp
         common/shader.hpp
         common/vboindexer.cpp
@@ -78,18 +78,18 @@ add_executable(TP1
         common/3dEntities/Mesh.cpp
         common/3dEntities/Mesh.hpp
 
-        TP1/vertex_shader.glsl
-        TP1/fragment_shader.glsl
+        Shaders/vertex_shader.glsl
+        Shaders/fragment_shader.glsl
         
 	external/stb_image/stb_image.h
 	external/stb_image/stb_image.cpp
 )
-target_link_libraries(TP1
+target_link_libraries(Main
         ${ALL_LIBS}
 )
 # Xcode and Visual working directories
-set_target_properties(TP1 PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/TP1/")
-create_target_launcher(TP1 WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/TP1/")
+set_target_properties(Main PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Main/")
+create_target_launcher(Main WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Main/")
 
 
 
@@ -98,12 +98,12 @@ SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
 SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shader$" )
 
 
-if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
-add_custom_command(
-   TARGET TP1 POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/TP1${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/TP1/"
-)
-elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
+#if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
+#add_custom_command(
+#   TARGET Main POST_BUILD
+#   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Main${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/TP1/"
+#)
+#elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
 
-endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
+#endif (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
 

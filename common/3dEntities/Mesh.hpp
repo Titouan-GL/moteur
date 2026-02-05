@@ -88,7 +88,7 @@ struct Vertex {
     }
 };
 
-class Mesh {
+class Mesh : public Entity3d{
 public:
     GLuint shaderPID;
     inline Mesh () {}
@@ -118,6 +118,7 @@ public:
     std::vector<Triangle> triangles;
     Material material;
     std::map<std::string, Texture> mymap;
+    float angle = 0;
 
 
 protected:

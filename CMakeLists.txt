@@ -78,8 +78,12 @@ add_executable(Main
         common/3dEntities/Mesh.cpp
         common/3dEntities/Mesh.hpp
 
+        common/3dEntities/Meshes/proceduralterrain.h
+        common/3dEntities/Meshes/proceduralterrain.cpp
+
         Shaders/vertex_shader.glsl
         Shaders/fragment_shader.glsl
+        Shaders/fragment_shader_Terrain.glsl
         
 	external/stb_image/stb_image.h
 	external/stb_image/stb_image.cpp

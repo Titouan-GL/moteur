@@ -21,3 +21,8 @@ Color Texture::getPixelSafe(size_t u, size_t v) const{
 
     return getPixel(u, v);
 }
+Color Texture::getPixelSafe(float x, float y) const{
+    size_t u = x*width;
+    size_t v = y*height;
+    return getPixelSafe(u, v);
+}

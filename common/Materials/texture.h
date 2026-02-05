@@ -75,22 +75,23 @@ public:
     ~Texture(){if (__synchronized) unsynchronize();}
 
     void loadTexture(const std::string path){
-
+        constexpr int CHANNELS = 3;
         // on force toutes les textures à être en 3 canaux
-        unsigned char * new_data = stbi_load(path.c_str(), &width, &height, &nbChannels, 3);
+        unsigned char * new_data = stbi_load(path.c_str(), &width, &height, &nbChannels, CHANNELS);
         if (!new_data){
             std::cout << "[Texture] Problème du chargement de la texture à " << path << " (impossible de charger les données)" << std::endl;
             return;
         }
 
-        data.resize(width * height * nbChannels);
-        memcpy(data.data(), new_data, width * height * 3);
+        data.resize(width * height * CHANNELS);
+        memcpy(data.data(), new_data, width * height * CHANNELS);
         stbi_image_free(new_data);
-
         synchronize();
     }
 
     Color getPixelSafe(size_t u, size_t v) const;
+
+    Color getPixelSafe(float x, float y) const;
 
     Color operator() (size_t i, size_t j) {
 

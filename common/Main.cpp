@@ -18,11 +18,13 @@ GLFWwindow* window;
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glut.h>
 #include <glm/gtx/string_cast.hpp>
+#include <algorithm>
 
-
+#include <string>
 #include <common/shader.hpp>
 #include <common/vboindexer.hpp>
 #include <common/3dEntities/Mesh.hpp>
+#include <common/3dEntities/Meshes/proceduralterrain.h>
 #include <common/Controls/cameracontrols.h>
 #include <common/Materials/material.h>
 
@@ -41,7 +43,11 @@ float lastFrame = 0.0f;
 float angle = 0.;
 float zoom = 1.;
 
-
+ProceduralTerrain mesh;
+Material mat;
+int resX = 4;
+int resY = 4;
+float rotSpeed = 1;
 int main( void )
 {
     // Initialise GLFW
@@ -100,33 +106,27 @@ int main( void )
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders( "../Shaders/vertex_shader.glsl", "../Shaders/fragment_shader.glsl" );
 
     /*****************TODO***********************/
     // Get a handle for our "Model View Projection" matrices uniforms
 
-
-    int modelMatrixLocation = glGetUniformLocation(programID, "model");
-
-    int viewMatrixLocation = glGetUniformLocation(programID, "view");
-
-    int projectionMatrixLocation = glGetUniformLocation(programID, "projection");
     /****************************************/
 
     //Chargement du fichier de maillage
-    std::string filename("../Resources/Models/Off/suzanne.off");
-    Mesh mesh = Mesh();
-    mesh.openOFF(filename, 1);
-    // Load it into a VBO
+    mesh = ProceduralTerrain();
+//    std::string filename("../Resources/Models/Off/suzanne.off");
+//    mesh.openOFF(filename, 1);
+    mesh.InitMesh(resX, resY, 10, 10);
+    std::string texname = "../Resources/Textures/Environement/heightmap-1024x1024.png";
+    mesh.ApplyHeightMap(texname);
 
-    // Get a handle for our "LightPosition" uniform
-    glUseProgram(programID);
-    GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
     //vec3(0.250000, 0.000000, 0.000000) vec3(0.250000, 0.500000, 0.000000) vec3(0.200000, 0.500000, 0.000000)
 
-    mesh.setShader("../Shaders/vertex_shader.glsl", "../Shaders/fragment_shader.glsl");
-    Material mat = Material(glm::vec3(0.5, 0.5, 0.5));
-    //mat.addTexture("texture0", Texture("../Resources/Textures/Environement/grass.png"));
+    mesh.setShader("../Shaders/vertex_shader.glsl", "../Shaders/fragment_shader_Terrain.glsl");
+    mat = Material(glm::vec3(1, 0, 0));
+    mat.addTexture("texture0", Texture("../Resources/Textures/Environement/grass.png"));
+    mat.addTexture("texture1", Texture("../Resources/Textures/Environement/rock.png"));
+    mat.addTexture("texture2", Texture("../Resources/Textures/Environement/snowrocks.png"));
     mesh.setMaterial(mat);
     // For speed computation
     double lastTime = glfwGetTime();
@@ -158,8 +158,6 @@ int main( void )
     while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0 );
 
-    // Cleanup VBO and shader
-    glDeleteProgram(programID);
     glDeleteVertexArrays(1, &VertexArrayID);
 
     // Close OpenGL window and terminate GLFW
@@ -177,6 +175,27 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 
     cam.inputs(window, deltaTime);
+    mesh.angle += rotSpeed*deltaTime;
+    if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS){
+        resX += 1; resY += 1;
+        mesh.InitMesh(resX, resY, 10, 10);
+        std::string texname = "../Resources/Textures/Environement/heightmap-1024x1024.png";
+        mesh.ApplyHeightMap(texname);
+    }
+    if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS){
+        resX -= 1; resY -= 1;
+        mesh.InitMesh(resX, resY, 10, 10);
+        std::string texname = "../Resources/Textures/Environement/heightmap-1024x1024.png";
+        mesh.ApplyHeightMap(texname);
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        rotSpeed += 0.1f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+        rotSpeed = std::max(0.0f, (float)rotSpeed - 0.1f);
+    }
+
+
 
 }
 

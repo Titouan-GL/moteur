@@ -193,6 +193,10 @@ void Mesh::render(const Camera &camera) const{
 
     material.render(shaderPID);
     glm::mat4 model = glm::mat4(1.0);
+//    float angle = atan2(direction.x, direction.z);
+    model = glm::translate(model, center);
+    model = glm::rotate(model, angle, up);
+    model = glm::translate(model, -1.0f*center);
     glUniformMatrix4fv(modelMatrixUniform, 1, GL_FALSE, glm::value_ptr(model));
 
     glm::mat4 View = camera.getViewMatrix();

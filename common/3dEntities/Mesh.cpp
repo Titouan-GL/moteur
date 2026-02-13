@@ -192,11 +192,7 @@ void Mesh::render(const Camera &camera) const{
 
 
     material.render(shaderPID);
-    glm::mat4 model = glm::mat4(1.0);
-//    float angle = atan2(direction.x, direction.z);
-    model = glm::translate(model, center);
-    model = glm::rotate(model, angle, up);
-    model = glm::translate(model, -1.0f*center);
+    glm::mat4 model = modelMatrix();
     glUniformMatrix4fv(modelMatrixUniform, 1, GL_FALSE, glm::value_ptr(model));
 
     glm::mat4 View = camera.getViewMatrix();
@@ -205,7 +201,7 @@ void Mesh::render(const Camera &camera) const{
     glm::mat4 Projection = camera.getProjectionMatrix();
     glUniformMatrix4fv(projectionMatrixUniform, 1, GL_FALSE, glm::value_ptr(Projection));
 
-    glUniform3fv(viewUniform, 1, glm::value_ptr(camera.direction));
+    glUniform3fv(viewUniform, 1, glm::value_ptr(camera.forward()));
 
     glDrawElements(GL_TRIANGLES, triangles.size()*3, GL_UNSIGNED_INT, (void*)0 );
 

@@ -19,6 +19,6 @@ public:
     float speed = 5.0f;
     float sensitivity = 100.0f;
     bool orbital = false;
-    glm::vec3 orbitalPos = glm::vec3(5, 9, -5);
+    glm::vec3 orbitalPos = glm::vec3(0, 9, -5);
     float timer = 1;
 };

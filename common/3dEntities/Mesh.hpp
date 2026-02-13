@@ -76,6 +76,11 @@ struct Vertex {
         normal = glm::normalize(n);
         texCoord = tc;
     }
+    inline Vertex (glm::vec3 p, glm::vec2 tc) {
+        position = p;
+        normal = glm::normalize(p);
+        texCoord = tc;
+    }
     inline Vertex (glm::vec3 p, glm::vec3 n) {
         position = p;
         normal = n;
@@ -88,7 +93,7 @@ struct Vertex {
     }
 };
 
-class Mesh : public Entity3d{
+class Mesh : public Node3d{
 public:
     GLuint shaderPID;
     inline Mesh () {}
@@ -118,7 +123,6 @@ public:
     std::vector<Triangle> triangles;
     Material material;
     std::map<std::string, Texture> mymap;
-    float angle = 0;
 
 
 protected:

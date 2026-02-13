@@ -61,32 +61,25 @@ add_executable(Main
         common/vboindexer.cpp
         common/vboindexer.hpp
         common/Edge.hpp
+        common/node.h common/node.cpp
         
-        common/Materials/material.h
-        common/Materials/material.cpp
-        common/Materials/texture.h
-        common/Materials/texture.cpp
+        common/Materials/material.h common/Materials/material.cpp
+        common/Materials/texture.h common/Materials/texture.cpp
 
 
-        common/Controls/cameracontrols.cpp
-        common/Controls/cameracontrols.h
+        common/Controls/cameracontrols.cpp common/Controls/cameracontrols.h
 
-        common/3dEntities/entity3d.h
-        common/3dEntities/entity3d.cpp
-        common/3dEntities/camera.h
-        common/3dEntities/camera.cpp
-        common/3dEntities/Mesh.cpp
-        common/3dEntities/Mesh.hpp
+        common/3dEntities/node3d.h common/3dEntities/node3d.cpp
+        common/3dEntities/camera.h common/3dEntities/camera.cpp
+        common/3dEntities/Mesh.cpp common/3dEntities/Mesh.hpp
 
-        common/3dEntities/Meshes/proceduralterrain.h
-        common/3dEntities/Meshes/proceduralterrain.cpp
+        common/3dEntities/Meshes/proceduralterrain.h common/3dEntities/Meshes/proceduralterrain.cpp
 
         Shaders/vertex_shader.glsl
         Shaders/fragment_shader.glsl
         Shaders/fragment_shader_Terrain.glsl
         
-	external/stb_image/stb_image.h
-	external/stb_image/stb_image.cpp
+        external/stb_image/stb_image.h external/stb_image/stb_image.cpp
 )
 target_link_libraries(Main
         ${ALL_LIBS}

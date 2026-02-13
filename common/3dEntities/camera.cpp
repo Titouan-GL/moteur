@@ -18,7 +18,7 @@ Camera::Camera(float width, float height, float fov, float nearPlane, float farP
 }
 
 glm::mat4 Camera::getViewMatrix() const{
-    return glm::lookAt(position, position+direction, up);
+    return glm::lookAt(position, position+forward(), up());
 }
 
 glm::mat4 Camera::getProjectionMatrix() const{

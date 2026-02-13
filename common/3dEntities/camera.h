@@ -1,11 +1,11 @@
 
 #pragma once
-#include "entity3d.h"
+#include "node3d.h"
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class Camera : public Entity3d
+class Camera : public Node3d
 {
 public:
     Camera(float width, float height, glm::vec3 position);

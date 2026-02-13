@@ -175,7 +175,7 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 
     cam.inputs(window, deltaTime);
-    mesh.angle += rotSpeed*deltaTime;
+    mesh.Rotate(mesh.up(), rotSpeed*deltaTime);
     if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS){
         resX += 1; resY += 1;
         mesh.InitMesh(resX, resY, 10, 10);

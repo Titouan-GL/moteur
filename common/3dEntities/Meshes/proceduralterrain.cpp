@@ -1,8 +1,7 @@
 #include "proceduralterrain.h"
 
 void ProceduralTerrain::InitMesh(int resX, int resY , float sizeX , float sizeY, float sizeZ){
-    direction = glm::normalize(glm::vec3(1.0f, 0.0f, 1.0f));
-    center = glm::vec3(sizeX/2.0, 0.0f, sizeY/2.0);
+    glm::vec3 center = glm::vec3(sizeX/2.0, 0.0f, sizeY/2.0);
     this->resX = resX;
     this->resY = resY;
     this->sizeX = sizeX;
@@ -14,8 +13,7 @@ void ProceduralTerrain::InitMesh(int resX, int resY , float sizeX , float sizeY,
     for(int i = 0; i < resX+1; i ++){
         for(int j = 0; j < resY+1; j++){
             float height = static_cast <float> (rand()) / (static_cast <float> ((float)RAND_MAX/sizeZ));
-            Vertex v(glm::vec3(i*(sizeX/resX), height, j*(sizeY/resY)));
-            v.texCoord = glm::vec2(i*(sizeX/resX), j*(sizeY/resY));
+            Vertex v(glm::vec3(i*(sizeX/resX), height, j*(sizeY/resY))-center, glm::vec2(i*(sizeX/resX), j*(sizeY/resY)));
             vertices.push_back(v);
             if(i > 0 && j > 0){
                 int i0 = (i-1)*(resY+1)+j-1;

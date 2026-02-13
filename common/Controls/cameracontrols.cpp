@@ -9,29 +9,29 @@ void CameraControls::inputs(GLFWwindow *window, float deltaTime){
     if(!orbital){
         float trueSpeed = speed * deltaTime;
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            position += trueSpeed * direction;
+            position += trueSpeed * forward();
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            position -= trueSpeed * direction;
+            position -= trueSpeed * forward();
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            position += trueSpeed * glm::normalize(glm::cross(direction, up));
+            position += trueSpeed * right();
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            position -= trueSpeed * glm::normalize(glm::cross(direction, up));
+            position -= trueSpeed * right();
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-            position += trueSpeed * up;
+            position += trueSpeed * up();
         if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-            position -= trueSpeed * up;
+            position -= trueSpeed * up();
     }
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS && timer < 0){
         timer = 1;
         if(orbital){
             orbital = false;
-            direction = glm::normalize(glm::vec3(0, 0, 1));
+            SetForward(glm::vec3(0, 0, 1));
             position += glm::vec3(0, -4, 0);
         }
         else{
             orbital = !orbital;
             position = orbitalPos;
-            direction = glm::normalize(glm::vec3(0, -1, 1));
+            SetForward(glm::vec3(0, -1, 1));
         }
     }
 
